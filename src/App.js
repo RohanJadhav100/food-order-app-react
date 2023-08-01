@@ -9,9 +9,13 @@ function App() {
   const openCartHandler = () => {
     setCartState(true);
   };
+
+  const closeCartHandler = () => {
+    setCartState(false);
+  };
   return (
     <Fragment>
-      {cartState && <Cart />}
+      {cartState && <Cart onCloseCart={closeCartHandler} />}
       <Header onCartOpen={openCartHandler} />
       <main>
         <Meal />

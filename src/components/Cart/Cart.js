@@ -7,7 +7,7 @@ const dummyCart = [
   { id: "c3", name: "Golf", quantity: 12, price: 30 },
 ];
 
-const Cart = () => {
+const Cart = (props) => {
   const cartItems = (
     <ul className={classes["cart-items"]}>
       {dummyCart.map((item) => {
@@ -16,7 +16,7 @@ const Cart = () => {
     </ul>
   );
   return (
-    <Modal>
+    <Modal onClose={props.onCloseCart}>
       {cartItems}
       <div className={classes.total}>
         <div>
@@ -24,7 +24,12 @@ const Cart = () => {
           <span>100</span>
         </div>
         <div className={classes.actions}>
-          <button className={classes["button--alt"]}>Close</button>
+          <button
+            className={classes["button--alt"]}
+            onClick={props.onCartSelect}
+          >
+            Close
+          </button>
           <button className={classes.button}>Order</button>
         </div>
       </div>
