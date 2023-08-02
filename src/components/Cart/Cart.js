@@ -1,13 +1,14 @@
 import classes from "./Cart.module.css";
 import Modal from "../UI/Modal";
-
+import { useContext } from "react";
+import CartContext from "../../store/cart-context";
 const dummyCart = [
   { id: "c1", name: "football", quantity: 22, price: 40 },
   { id: "c2", name: "Hockey", quantity: 32, price: 20 },
-  { id: "c3", name: "Golf", quantity: 12, price: 30 },
 ];
 
 const Cart = (props) => {
+  const cartCtx = useContext(CartContext);
   const cartItems = (
     <ul className={classes["cart-items"]}>
       {dummyCart.map((item) => {
@@ -21,12 +22,12 @@ const Cart = (props) => {
       <div className={classes.total}>
         <div>
           <span>Total Amount</span>
-          <span>100</span>
+          <span>{cartCtx.totalAmount}</span>
         </div>
         <div className={classes.actions}>
           <button
             className={classes["button--alt"]}
-            onClick={props.onCartSelect}
+            onClick={props.onCloseCart}
           >
             Close
           </button>
