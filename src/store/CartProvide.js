@@ -8,11 +8,28 @@ const defaultCartState = {
 
 const cartReducer = (state, action) => {
   if (action.type === "ADD") {
-    const updatedItems = [...state.items, action.item];
-    return {
-      items: updatedItems,
-      totalAmount: 0,
-    };
+    let oldState = state.items;
+    let itemId = action.item.id;
+    let position = oldState.findIndex((e) => {
+      return e.id == itemId;
+    });
+    const newAmount =
+      state.totalAmount + action.item.qauntity * action.item.price;
+    if (position === -1) {
+      const updatedItems = [...state.items, action.item];
+
+      return {
+        items: updatedItems,
+        totalAmount: newAmount,
+      };
+    } else {
+      oldState[position].qauntity =
+        oldState[position].qauntity + action.item.qauntity;
+      return {
+        items: oldState,
+        totalAmount: newAmount,
+      };
+    }
   }
   return defaultCartState;
 };
@@ -33,7 +50,7 @@ const CartProvider = (props) => {
 
   const cartContext = {
     items: cartState.items,
-    totalAmount: 0,
+    totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
   };
